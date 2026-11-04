@@ -10,14 +10,24 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as CompareRouteImport } from './routes/compare'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as DiscoverRouteImport } from './routes/discover'
+import { Route as PlannerRouteImport } from './routes/planner'
+import { Route as RoadmapRouteImport } from './routes/roadmap'
+import { Route as SavedRouteImport } from './routes/saved'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as CareersIdRouteImport } from './routes/careers.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CompareRoute = CompareRouteImport.update({
@@ -35,6 +45,26 @@ const DiscoverRoute = DiscoverRouteImport.update({
   path: '/discover',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PlannerRoute = PlannerRouteImport.update({
+  id: '/planner',
+  path: '/planner',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RoadmapRoute = RoadmapRouteImport.update({
+  id: '/roadmap',
+  path: '/roadmap',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SavedRoute = SavedRouteImport.update({
+  id: '/saved',
+  path: '/saved',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CareersIdRoute = CareersIdRouteImport.update({
   id: '/careers/$id',
   path: '/careers/$id',
@@ -43,40 +73,90 @@ const CareersIdRoute = CareersIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/compare': typeof CompareRoute
   '/dashboard': typeof DashboardRoute
   '/discover': typeof DiscoverRoute
+  '/planner': typeof PlannerRoute
+  '/roadmap': typeof RoadmapRoute
+  '/saved': typeof SavedRoute
+  '/settings': typeof SettingsRoute
   '/careers/$id': typeof CareersIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/compare': typeof CompareRoute
   '/dashboard': typeof DashboardRoute
   '/discover': typeof DiscoverRoute
+  '/planner': typeof PlannerRoute
+  '/roadmap': typeof RoadmapRoute
+  '/saved': typeof SavedRoute
+  '/settings': typeof SettingsRoute
   '/careers/$id': typeof CareersIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/compare': typeof CompareRoute
   '/dashboard': typeof DashboardRoute
   '/discover': typeof DiscoverRoute
+  '/planner': typeof PlannerRoute
+  '/roadmap': typeof RoadmapRoute
+  '/saved': typeof SavedRoute
+  '/settings': typeof SettingsRoute
   '/careers/$id': typeof CareersIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/compare' | '/dashboard' | '/discover' | '/careers/$id'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/compare'
+    | '/dashboard'
+    | '/discover'
+    | '/planner'
+    | '/roadmap'
+    | '/saved'
+    | '/settings'
+    | '/careers/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/compare' | '/dashboard' | '/discover' | '/careers/$id'
+  to:
+    | '/'
+    | '/about'
+    | '/compare'
+    | '/dashboard'
+    | '/discover'
+    | '/planner'
+    | '/roadmap'
+    | '/saved'
+    | '/settings'
+    | '/careers/$id'
   id:
-    '__root__' | '/' | '/compare' | '/dashboard' | '/discover' | '/careers/$id'
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/compare'
+    | '/dashboard'
+    | '/discover'
+    | '/planner'
+    | '/roadmap'
+    | '/saved'
+    | '/settings'
+    | '/careers/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
   CompareRoute: typeof CompareRoute
   DashboardRoute: typeof DashboardRoute
   DiscoverRoute: typeof DiscoverRoute
+  PlannerRoute: typeof PlannerRoute
+  RoadmapRoute: typeof RoadmapRoute
+  SavedRoute: typeof SavedRoute
+  SettingsRoute: typeof SettingsRoute
   CareersIdRoute: typeof CareersIdRoute
 }
 
@@ -87,6 +167,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/compare': {
@@ -110,6 +197,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DiscoverRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/planner': {
+      id: '/planner'
+      path: '/planner'
+      fullPath: '/planner'
+      preLoaderRoute: typeof PlannerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/roadmap': {
+      id: '/roadmap'
+      path: '/roadmap'
+      fullPath: '/roadmap'
+      preLoaderRoute: typeof RoadmapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/saved': {
+      id: '/saved'
+      path: '/saved'
+      fullPath: '/saved'
+      preLoaderRoute: typeof SavedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/careers/$id': {
       id: '/careers/$id'
       path: '/careers/$id'
@@ -122,9 +237,14 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
   CompareRoute: CompareRoute,
   DashboardRoute: DashboardRoute,
   DiscoverRoute: DiscoverRoute,
+  PlannerRoute: PlannerRoute,
+  RoadmapRoute: RoadmapRoute,
+  SavedRoute: SavedRoute,
+  SettingsRoute: SettingsRoute,
   CareersIdRoute: CareersIdRoute,
 }
 export const routeTree = rootRouteImport
