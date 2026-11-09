@@ -8,7 +8,7 @@ import { buildPlan, buildRoadmap, type PlanInput } from "@/lib/engine";
 import { actions, useApp } from "@/lib/store";
 
 export const Route = createFileRoute("/planner")({
-  validateSearch: (s: Record<string, unknown>) => ({ career: typeof s.career === "string" ? s.career : undefined }),
+  validateSearch: (s: Record<string, unknown>) => (typeof s["career"] === "string" ? { career: s["career"] } : {}) as { career?: string },
   head: () => ({
     meta: [
       { title: "Budget-to-Skill Planner — Futuroute" },
@@ -55,7 +55,7 @@ function Planner() {
           <div><label htmlFor="career" className="mb-1.5 block text-sm text-text-2">Target career or skill</label>
             <select id="career" className={sel} value={f.careerId} onChange={(e) => set("careerId", e.target.value)}>{CAREERS.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}</select></div>
           <div><span className="mb-1.5 block text-sm text-text-2">Current skill level</span>
-            <div className="flex flex-wrap gap-2">{[["beginner", "Complete beginner"], ["some", "Some basics"], ["comfortable", "Fairly comfortable"]].map(([v, l]) => <Chip key={v} active={f.level === v} onClick={() => set("level", v)}>{l}</Chip>)}</div></div>
+            <div className="flex flex-wrap gap-2">{([["beginner", "Complete beginner"], ["some", "Some basics"], ["comfortable", "Fairly comfortable"]] as const).map(([v, l]) => <Chip key={v} active={f.level === v} onClick={() => set("level", v)}>{l}</Chip>)}</div></div>
           <div><span className="mb-1.5 block text-sm text-text-2">Available budget (INR)</span>
             <div className="flex flex-wrap gap-2">
               {PRESETS.map((p) => <Chip key={p.v} active={!custom && f.budget === p.v} onClick={() => { setCustom(false); set("budget", p.v); }}>{p.l}</Chip>)}

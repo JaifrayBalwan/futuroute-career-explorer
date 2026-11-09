@@ -50,7 +50,7 @@ function HeroArt() {
           <span className="mt-1 inline-block rounded-full bg-cyan/15 px-2 py-0.5 text-[11px] text-cyan">{i.skill}</span>
         </Link>
       ))}
-      <div className="glass absolute bottom-[8%] left-[2%] hidden items-center gap-3 p-3 sm:flex">
+      <div className="glass absolute left-[2%] top-[6%] hidden items-center gap-3 p-3 sm:flex">
         <ProgressRing value={40} size={48} stroke={5} label={<span className="text-[10px]">40%</span>} />
         <div className="text-xs"><p className="font-medium">Example roadmap</p><p className="text-muted-foreground">Illustration only</p></div>
       </div>

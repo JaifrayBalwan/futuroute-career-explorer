@@ -41,12 +41,12 @@ const ROWS: { key: string; label: string; render: (c: Career) => React.ReactNode
 ];
 
 function summary(cs: Career[]) {
-  const shared = cs[0].skills.filter((s) => cs.slice(1).every((c) => c.skills.includes(s)));
-  const easier = [...cs].sort((a, b) => a.commitmentLevel - b.commitmentLevel)[0];
+  const shared = cs[0]!.skills.filter((s) => cs.slice(1).every((c) => c.skills.includes(s)));
+  const easier = [...cs].sort((a, b) => a.commitmentLevel - b.commitmentLevel)[0]!;
   const lines = [
     shared.length ? `They share ${shared.join(", ")} — learning it helps with every option.` : "They draw on quite different skill sets, so a short trial of each will tell you a lot.",
     `${easier.name} generally has a gentler starting curve; ${cs.filter((c) => c !== easier).map((c) => c.name).join(" and ")} may need more foundational study first.`,
-    ...cs.map((c) => `${c.name} suits you if you enjoy: ${c.pros[0].toLowerCase()}, but be ready for: ${c.cons[0].toLowerCase()}.`),
+    ...cs.map((c) => `${c.name} suits you if you enjoy: ${(c.pros[0] ?? "").toLowerCase()}, but be ready for: ${(c.cons[0] ?? "").toLowerCase()}.`),
   ];
   return lines;
 }

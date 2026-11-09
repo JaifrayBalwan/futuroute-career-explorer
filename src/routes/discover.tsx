@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowLeft, ArrowRight, Loader2, RotateCcw, FlaskConical, GitCompareArrows } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
@@ -44,7 +44,7 @@ function Discover() {
   const [err, setErr] = useState("");
   const [loading, setLoading] = useState(false);
   const [showForm, setShowForm] = useState(!discovery);
-  const step = STEPS[i];
+  const step = STEPS[i]!;
   const val = a[step.key];
 
   const valid = () => step.optional || step.type === "slider" || (Array.isArray(val) ? val.length > 0 : !!val);
@@ -114,6 +114,7 @@ function Discover() {
 
 function Report({ answers, onRetake }: { answers: DiscoveryAnswers; onRetake: () => void }) {
   const recs = recommend(answers);
+  const nav = useNavigate();
   return (
     <AppShell>
       <PageHeader eyebrow="Your exploration report" title="Careers worth exploring" text="These suggestions are starting points for exploration, not fixed decisions about your future.">
@@ -152,7 +153,7 @@ function Report({ answers, onRetake }: { answers: DiscoveryAnswers; onRetake: ()
       </div>
       {recs.length >= 2 && (
         <div className="mt-6 text-center">
-          <button type="button" className={btnClass("primary")} onClick={() => { actions.setCompare(recs.slice(0, 3).map((r) => r.career.id)); window.location.assign("/compare"); }}>
+          <button type="button" className={btnClass("primary")} onClick={() => { actions.setCompare(recs.slice(0, 3).map((r) => r.career.id)); nav({ to: "/compare" }); }}>
             <GitCompareArrows className="size-4" />Compare my top options
           </button>
         </div>

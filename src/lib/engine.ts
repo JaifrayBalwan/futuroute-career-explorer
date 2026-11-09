@@ -21,7 +21,7 @@ export type Recommendation = { career: Career; reasons: string[] };
 
 export function recommend(a: DiscoveryAnswers): Recommendation[] {
   const picks = ["subjects", "interests", "work", "skills", "priorities"].flatMap((k) => (Array.isArray(a[k]) ? (a[k] as string[]) : []));
-  const curious = Array.isArray(a.curious) ? (a.curious as string[]) : [];
+  const curious = Array.isArray(a["curious"]) ? (a["curious"] as string[]) : [];
   const scored = CAREERS.map((c) => {
     const reasons: string[] = [];
     let score = 0;
@@ -41,7 +41,7 @@ export function recommend(a: DiscoveryAnswers): Recommendation[] {
   }));
 }
 
-export type PlanInput = { careerId: string; level: string; budget: number; hours: number; device: string; format: string; outcome: string };
+export type PlanInput = { project?: string; careerId: string; level: string; budget: number; hours: number; device: string; format: string; outcome: string };
 export type Plan = {
   career: Career; learn: string[]; free: typeof RESOURCES[keyof typeof RESOURCES][];
   optional: { item: string; note: string }[]; extra: { item: string; note: string }[];
@@ -49,7 +49,7 @@ export type Plan = {
 };
 
 export function buildPlan(i: PlanInput): Plan {
-  const career = getCareer(i.careerId) ?? CAREERS[0];
+  const career = getCareer(i.careerId) ?? CAREERS[0]!;
   const base = { beginner: 1, some: 0.7, comfortable: 0.5 }[i.level as "beginner"] ?? 1;
   const outcomeHours = i.outcome === "project" ? 60 : i.outcome === "portfolio" ? 100 : 35;
   const totalHours = Math.round(outcomeHours * base * (0.8 + career.commitmentLevel * 0.1));
@@ -73,12 +73,12 @@ export function buildPlan(i: PlanInput): Plan {
   return {
     career, learn: career.skills, free: career.resources, optional, extra, weeks,
     schedule: `About ${totalHours} hours in total ≈ ${weeks} weeks at ${i.hours} h/week (approximate, not a guarantee).`,
-    project: career.projects[0], budgetNote, withinBudget, warnings,
+    project: career.projects[0] ?? "", budgetNote, withinBudget, warnings,
   };
 }
 
 export function buildRoadmap(i: PlanInput): Roadmap {
-  const c = getCareer(i.careerId) ?? CAREERS[0];
+  const c = getCareer(i.careerId) ?? CAREERS[0]!;
   const r = c.resources;
   const eff = (h: number) => `${Math.max(1, Math.round(h))} h · ~${Math.max(1, Math.ceil(h / Math.max(1, i.hours)))} wk`;
   const scale = i.level === "comfortable" ? 0.6 : i.level === "some" ? 0.8 : 1;
@@ -87,15 +87,15 @@ export function buildRoadmap(i: PlanInput): Roadmap {
   });
   const tasks: Task[] = [
     t(1, `What does a ${c.name} do?`, c.day, 2),
-    t(1, `Foundations: ${c.skills[0]}`, `Learn the basics of ${c.skills[0].toLowerCase()} using a free resource.`, 8, r[0]),
-    t(1, `Foundations: ${c.skills[1]}`, `Get comfortable with ${c.skills[1].toLowerCase()}.`, 8, r[1] ?? r[0]),
-    t(2, `Core skill: ${c.skills[2]}`, `Practise ${c.skills[2].toLowerCase()} with small exercises.`, 10, r[2] ?? r[0]),
-    t(2, `Core skill: ${c.skills[3]}`, `Apply ${c.skills[3].toLowerCase()} to a tiny example.`, 10, r[0]),
-    t(3, "Plan your beginner project", `Outline: ${i.project || c.projects[0]}. Write down goals and features.`, 2),
-    t(3, "Build your beginner project", `Build a first working version of “${i.project || c.projects[0]}”.`, 15),
+    t(1, `Foundations: ${c.skills[0]!}`, `Learn the basics of ${c.skills[0]!.toLowerCase()} using a free resource.`, 8, r[0]),
+    t(1, `Foundations: ${c.skills[1]!}`, `Get comfortable with ${c.skills[1]!.toLowerCase()}.`, 8, r[1] ?? r[0]),
+    t(2, `Core skill: ${c.skills[2]!}`, `Practise ${c.skills[2]!.toLowerCase()} with small exercises.`, 10, r[2] ?? r[0]),
+    t(2, `Core skill: ${c.skills[3]!}`, `Apply ${c.skills[3]!.toLowerCase()} to a tiny example.`, 10, r[0]),
+    t(3, "Plan your beginner project", `Outline: ${i.project || c.projects[0]!}. Write down goals and features.`, 2),
+    t(3, "Build your beginner project", `Build a first working version of “${i.project || c.projects[0]!}”.`, 15),
     t(3, "Get feedback", "Show your work to a friend, teacher or online community and note feedback.", 2),
     t(4, "Reflect on the experience", "Did you enjoy it? What felt hard? Note it in your journal.", 1),
     t(4, "Decide your next step", "Continue deeper, try a related career, or compare with another path.", 1),
   ];
-  return { careerId: c.id, level: i.level, hours: i.hours, budget: i.budget, format: i.format, project: i.project || c.projects[0], createdAt: Date.now(), tasks };
+  return { careerId: c.id, level: i.level, hours: i.hours, budget: i.budget, format: i.format, project: i.project || c.projects[0]!, createdAt: Date.now(), tasks };
 }

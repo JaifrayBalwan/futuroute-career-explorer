@@ -18,6 +18,7 @@ import { Route as PlannerRouteImport } from './routes/planner'
 import { Route as RoadmapRouteImport } from './routes/roadmap'
 import { Route as SavedRouteImport } from './routes/saved'
 import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as TryRouteImport } from './routes/try'
 import { Route as CareersIdRouteImport } from './routes/careers.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -65,6 +66,11 @@ const SettingsRoute = SettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TryRoute = TryRouteImport.update({
+  id: '/try',
+  path: '/try',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CareersIdRoute = CareersIdRouteImport.update({
   id: '/careers/$id',
   path: '/careers/$id',
@@ -81,6 +87,7 @@ export interface FileRoutesByFullPath {
   '/roadmap': typeof RoadmapRoute
   '/saved': typeof SavedRoute
   '/settings': typeof SettingsRoute
+  '/try': typeof TryRoute
   '/careers/$id': typeof CareersIdRoute
 }
 export interface FileRoutesByTo {
@@ -93,6 +100,7 @@ export interface FileRoutesByTo {
   '/roadmap': typeof RoadmapRoute
   '/saved': typeof SavedRoute
   '/settings': typeof SettingsRoute
+  '/try': typeof TryRoute
   '/careers/$id': typeof CareersIdRoute
 }
 export interface FileRoutesById {
@@ -106,6 +114,7 @@ export interface FileRoutesById {
   '/roadmap': typeof RoadmapRoute
   '/saved': typeof SavedRoute
   '/settings': typeof SettingsRoute
+  '/try': typeof TryRoute
   '/careers/$id': typeof CareersIdRoute
 }
 export interface FileRouteTypes {
@@ -120,6 +129,7 @@ export interface FileRouteTypes {
     | '/roadmap'
     | '/saved'
     | '/settings'
+    | '/try'
     | '/careers/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -132,6 +142,7 @@ export interface FileRouteTypes {
     | '/roadmap'
     | '/saved'
     | '/settings'
+    | '/try'
     | '/careers/$id'
   id:
     | '__root__'
@@ -144,6 +155,7 @@ export interface FileRouteTypes {
     | '/roadmap'
     | '/saved'
     | '/settings'
+    | '/try'
     | '/careers/$id'
   fileRoutesById: FileRoutesById
 }
@@ -157,6 +169,7 @@ export interface RootRouteChildren {
   RoadmapRoute: typeof RoadmapRoute
   SavedRoute: typeof SavedRoute
   SettingsRoute: typeof SettingsRoute
+  TryRoute: typeof TryRoute
   CareersIdRoute: typeof CareersIdRoute
 }
 
@@ -225,6 +238,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/try': {
+      id: '/try'
+      path: '/try'
+      fullPath: '/try'
+      preLoaderRoute: typeof TryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/careers/$id': {
       id: '/careers/$id'
       path: '/careers/$id'
@@ -245,6 +265,7 @@ const rootRouteChildren: RootRouteChildren = {
   RoadmapRoute: RoadmapRoute,
   SavedRoute: SavedRoute,
   SettingsRoute: SettingsRoute,
+  TryRoute: TryRoute,
   CareersIdRoute: CareersIdRoute,
 }
 export const routeTree = rootRouteImport

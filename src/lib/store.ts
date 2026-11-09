@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from "react";
 
-export type Task = { id: string; phase: number; title: string; desc: string; effort: string; resource?: { name: string; url: string }; done: boolean };
+export type Task = { id: string; phase: number; title: string; desc: string; effort: string; resource?: { name: string; url: string } | undefined; done: boolean };
 export type Roadmap = { careerId: string; level: string; hours: number; budget: number; format: string; project: string; createdAt: number; tasks: Task[] };
 export type ChallengeResult = { correct: boolean; answer: string; enjoy?: "enjoyed" | "okay" | "not"; reflection?: string; at: number };
 export type Activity = { id: string; text: string; at: number; kind: "save" | "compare" | "task" | "challenge" | "roadmap" | "discover" };
