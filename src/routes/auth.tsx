@@ -6,9 +6,9 @@ import { lovable } from "@/integrations/lovable/index";
 import { Logo, Glass, Button, Notice } from "@/components/ui-kit";
 import { safeNext } from "@/lib/auth";
 
-type Search = { next?: string };
+type Search = { next?: string | undefined };
 export const Route = createFileRoute("/auth")({
-  validateSearch: (s: Record<string, unknown>): Search => ({ next: typeof s.next === "string" ? s.next : undefined }),
+  validateSearch: (s: Record<string, unknown>): Search => ({ next: typeof s["next"] === "string" ? s["next"] : undefined }),
   head: () => ({ meta: [
     { title: "Sign in — Futuroute" },
     { name: "description", content: "Sign in or create a Futuroute account to save careers, assessments and roadmaps." },

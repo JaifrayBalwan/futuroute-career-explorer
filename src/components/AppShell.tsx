@@ -5,6 +5,9 @@ import { Logo, btnClass, DemoBadge } from "./ui-kit";
 import { cn } from "@/lib/utils";
 import { CAREERS } from "@/lib/careers";
 import { useApp } from "@/lib/store";
+import { useUser } from "@/lib/auth";
+import { supabase } from "@/integrations/supabase/client";
+import { useQueryClient } from "@tanstack/react-query";
 
 const NAV = [
   { to: "/dashboard", label: "Overview", icon: LayoutGrid },
@@ -38,10 +41,25 @@ function SideNav({ onNavigate }: { onNavigate?: () => void }) {
 }
 
 function DemoCard() {
+  const { user, loading } = useUser();
+  const nav = useNavigate();
+  const qc = useQueryClient();
+  if (loading) return <div className="glass-soft h-20 p-4" />;
+  if (!user) return (
+    <div className="glass-soft p-4">
+      <p className="text-sm font-medium">Exploring as a guest</p>
+      <p className="mt-1 text-xs text-muted-foreground">Progress is kept only in this browser. Sign in to save it to your account.</p>
+      <Link to="/auth" className={btnClass("soft", "mt-3 w-full")}>Sign in or sign up</Link>
+    </div>
+  );
+  async function out() { await qc.cancelQueries(); qc.clear(); await supabase.auth.signOut(); nav({ to: "/auth", replace: true }); }
   return (
     <div className="glass-soft p-4">
-      <p className="text-sm font-medium">Demo profile</p>
-      <p className="mt-1 text-xs text-muted-foreground">No account needed. Your progress is stored only in this browser.</p>
+      <p className="truncate text-sm font-medium">{user.email}</p>
+      <div className="mt-3 flex gap-2">
+        <Link to="/profile" className={btnClass("soft", "flex-1")}>My profile</Link>
+        <button type="button" onClick={out} className={btnClass("outline")}>Sign out</button>
+      </div>
     </div>
   );
 }

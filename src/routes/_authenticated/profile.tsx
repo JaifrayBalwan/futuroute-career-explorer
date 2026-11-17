@@ -18,7 +18,7 @@ function Profile() {
   const { user } = useUser();
   return (
     <AppShell>
-      <PageHeader title="My profile" text={user?.email ? `Signed in as ${user.email}` : undefined} />
+      <PageHeader title="My profile" text={user?.email ? `Signed in as ${user.email}` : ""} />
       <div className="max-w-3xl">{user && <ProfileForm userId={user.id} submitLabel="Save changes" />}</div>
     </AppShell>
   );
