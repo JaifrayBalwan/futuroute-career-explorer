@@ -10,8 +10,8 @@
 <!-- LOVABLE:END -->
 
 ## Futuroute architecture
-- Accounts, profiles and preferences live in Lovable Cloud (RLS per user; careers public-read, admin-write via user_roles/has_role); guest progress still uses `src/lib/store.ts` localStorage until each feature is migrated.
-- Signed-in-only pages live under `src/routes/_authenticated/` (client-only gate to /auth).
+- Accounts, profiles and preferences live in Lovable Cloud (RLS per user; careers public-read, admin-write via user_roles/has_role). Sign-in is Supabase email/password (confirmation required by the project) plus Google OAuth; `/login`, `/register`, `/forgot-password` and `/reset-password` share the components in `src/components/auth/`.
+- Signed-in-only pages live under `src/routes/_authenticated/` (client-only gate to `/login?next=…`). Exploration progress (saved careers, comparisons, roadmap, challenges) is kept per account in `src/lib/store.ts` localStorage via `setDataOwner`, which follows the session; moving it into the `saved_careers`/`roadmaps` tables is still open.
 - Recommendations/plans come from the deterministic rule engine in `src/lib/engine.ts`; AI prompt templates in `src/lib/ai-prompts.ts` must only be called from a server function when live AI is added.
 - Career content is curated in `src/lib/careers.ts`; only add resource URLs that have been checked to load.
 - App pages wrap content in `AppShell`; the public homepage (`/`) has its own header.

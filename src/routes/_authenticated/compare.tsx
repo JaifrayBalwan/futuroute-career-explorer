@@ -8,7 +8,7 @@ import { CAREERS, HUE_CLASS, getCareer, type Career } from "@/lib/careers";
 import { actions, useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/compare")({
+export const Route = createFileRoute("/_authenticated/compare")({
   head: () => ({
     meta: [
       { title: "Compare My Futures — Futuroute" },

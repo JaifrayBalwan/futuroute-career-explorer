@@ -1,15 +1,23 @@
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { Bookmark, BookmarkCheck, ArrowRight } from "lucide-react";
 import { CAREERS, HUE_CLASS, type Career } from "@/lib/careers";
 import { actions, useApp } from "@/lib/store";
+import { useUser } from "@/lib/auth";
 import { Chip, btnClass } from "./ui-kit";
 import { cn } from "@/lib/utils";
 
 export function SaveButton({ career, compact }: { career: Career; compact?: boolean }) {
   const { saved } = useApp();
+  const { user } = useUser();
+  const nav = useNavigate();
+  const href = useRouterState({ select: (r) => r.location.href });
   const on = saved.includes(career.id);
+  const toggle = () => {
+    if (!user) { nav({ to: "/login", search: { next: href } }); return; }
+    actions.toggleSave(career.id, career.name);
+  };
   return (
-    <button type="button" onClick={() => actions.toggleSave(career.id, career.name)} aria-pressed={on}
+    <button type="button" onClick={toggle} aria-pressed={on}
       aria-label={on ? `Remove ${career.name} from saved` : `Save ${career.name}`}
       className={cn("inline-flex min-h-10 items-center gap-1.5 rounded-xl border px-3 text-sm transition",
         on ? "border-turquoise/40 bg-turquoise/15 text-turquoise" : "border-glass-border bg-secondary text-text-2 hover:text-foreground")}>

@@ -6,7 +6,7 @@ import { CareerCard } from "@/components/CareerParts";
 import { getCareer } from "@/lib/careers";
 import { actions, useApp } from "@/lib/store";
 
-export const Route = createFileRoute("/saved")({
+export const Route = createFileRoute("/_authenticated/saved")({
   head: () => ({
     meta: [
       { title: "Saved Careers — Futuroute" },

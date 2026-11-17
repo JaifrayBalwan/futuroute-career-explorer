@@ -7,7 +7,7 @@ import { CAREERS, getCareer } from "@/lib/careers";
 import { buildPlan, buildRoadmap, type PlanInput } from "@/lib/engine";
 import { actions, useApp } from "@/lib/store";
 
-export const Route = createFileRoute("/planner")({
+export const Route = createFileRoute("/_authenticated/planner")({
   validateSearch: (s: Record<string, unknown>) => (typeof s["career"] === "string" ? { career: s["career"] } : {}) as { career?: string },
   head: () => ({
     meta: [

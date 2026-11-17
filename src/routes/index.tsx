@@ -4,6 +4,7 @@ import { Compass, GitCompareArrows, Map, ArrowRight, Menu, X } from "lucide-reac
 import { Logo, btnClass, Chip, ProgressRing } from "@/components/ui-kit";
 import { CareerCard } from "@/components/CareerParts";
 import { CAREERS } from "@/lib/careers";
+import { useUser } from "@/lib/auth";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -60,6 +61,7 @@ function HeroArt() {
 
 function Home() {
   const [menu, setMenu] = useState(false);
+  const { user } = useUser();
   const links = [
     { to: "/", label: "Home" }, { to: "/discover", label: "Discover Careers" }, { to: "/compare", label: "Compare Careers" },
     { to: "/about", label: "How It Works" }, { to: "/about", label: "About" },
@@ -72,7 +74,14 @@ function Home() {
           {links.map((l) => <Link key={l.label} to={l.to} className={btnClass("ghost")}>{l.label}</Link>)}
         </nav>
         <div className="flex items-center gap-2">
-          <Link to="/dashboard" className={btnClass("primary", "hidden sm:inline-flex")}>Start Exploring</Link>
+          {user ? (
+            <Link to="/dashboard" className={btnClass("primary", "hidden sm:inline-flex")}>Go to dashboard</Link>
+          ) : (
+            <>
+              <Link to="/login" className={btnClass("ghost", "hidden sm:inline-flex")}>Sign in</Link>
+              <Link to="/register" className={btnClass("primary", "hidden sm:inline-flex")}>Get started</Link>
+            </>
+          )}
           <button type="button" className="grid size-10 place-items-center rounded-xl border border-glass-border md:hidden" aria-label={menu ? "Close menu" : "Open menu"} aria-expanded={menu} onClick={() => setMenu(!menu)}>
             {menu ? <X className="size-4" /> : <Menu className="size-4" />}
           </button>
@@ -81,7 +90,14 @@ function Home() {
       {menu && (
         <nav aria-label="Mobile" className="glass mx-5 mb-4 flex flex-col p-2 md:hidden">
           {links.map((l) => <Link key={l.label} to={l.to} className={btnClass("ghost", "justify-start")}>{l.label}</Link>)}
-          <Link to="/dashboard" className={btnClass("primary", "mt-2")}>Start Exploring</Link>
+          {user ? (
+            <Link to="/dashboard" className={btnClass("primary", "mt-2")}>Go to dashboard</Link>
+          ) : (
+            <>
+              <Link to="/login" className={btnClass("ghost", "mt-2 justify-start")}>Sign in</Link>
+              <Link to="/register" className={btnClass("primary", "mt-2")}>Get started</Link>
+            </>
+          )}
         </nav>
       )}
 
@@ -92,8 +108,12 @@ function Home() {
             <h1 className="font-display text-4xl font-semibold leading-[1.05] sm:text-6xl">Your Future Isn't <span className="text-gradient">One-Size-Fits-All.</span></h1>
             <p className="mt-6 max-w-xl text-lg text-text-2">Explore career paths that match your interests, compare what they really involve, and build a learning plan that fits your time, skills and budget.</p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/discover" className={btnClass("primary", "h-12 px-6")}>Discover My Path <ArrowRight className="size-4" /></Link>
-              <Link to="/compare" className={btnClass("outline", "h-12 px-6")}>Compare Careers</Link>
+              {user ? (
+                <Link to="/discover" className={btnClass("primary", "h-12 px-6")}>Discover My Path <ArrowRight className="size-4" /></Link>
+              ) : (
+                <Link to="/register" className={btnClass("primary", "h-12 px-6")}>Get started — it's free <ArrowRight className="size-4" /></Link>
+              )}
+              <Link to={user ? "/compare" : "/login"} className={btnClass("outline", "h-12 px-6")}>{user ? "Compare Careers" : "Sign in"}</Link>
             </div>
             <p className="mt-6 text-sm text-muted-foreground">Explore possibilities. Understand your options. Take your next step.</p>
           </div>
@@ -143,7 +163,7 @@ function Home() {
         <section className="mx-auto max-w-7xl px-5 py-16">
           <div className="glass relative overflow-hidden p-10 text-center sm:p-14">
             <h2 className="font-display text-3xl font-semibold sm:text-4xl">Don't guess your future. Start exploring it.</h2>
-            <Link to="/discover" className={btnClass("primary", "mt-8 h-12 px-6")}>Explore My Options</Link>
+            <Link to={user ? "/discover" : "/register"} className={btnClass("primary", "mt-8 h-12 px-6")}>{user ? "Explore My Options" : "Create your free account"}</Link>
           </div>
         </section>
       </main>

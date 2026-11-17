@@ -36,7 +36,7 @@ const CHALLENGES: Ch[] = [
     skills: ["Audience thinking", "Copywriting", "Creativity"], reflection: "How would you measure whether your idea worked?" },
 ];
 
-export const Route = createFileRoute("/try")({
+export const Route = createFileRoute("/_authenticated/try")({
   validateSearch: (s: Record<string, unknown>) => (typeof s["c"] === "string" ? { c: s["c"] } : {}) as { c?: string },
   head: () => ({
     meta: [

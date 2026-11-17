@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { ExternalLink, GitCompareArrows, FlaskConical, Wallet } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
@@ -6,6 +6,7 @@ import { Glass, Chip, btnClass, PageHeader, Bar } from "@/components/ui-kit";
 import { SaveButton } from "@/components/CareerParts";
 import { getCareer } from "@/lib/careers";
 import { actions, useApp } from "@/lib/store";
+import { useUser } from "@/lib/auth";
 
 export const Route = createFileRoute("/careers/$id")({
   loader: ({ params }) => { const c = getCareer(params.id); if (!c) throw notFound(); return { name: c.name, short: c.short }; },
@@ -28,9 +29,12 @@ function CareerPage() {
   const { id } = Route.useParams();
   const c = getCareer(id)!;
   const { compare } = useApp();
+  const { user } = useUser();
   const nav = useNavigate();
-  useEffect(() => { actions.visit(id); }, [id]);
+  const href = useRouterState({ select: (r) => r.location.href });
+  useEffect(() => { if (user) actions.visit(id); }, [id, user]);
   const addCompare = () => {
+    if (!user) { nav({ to: "/login", search: { next: href } }); return; }
     const next = compare.includes(id) ? compare : [...compare.filter((x) => x !== id), id].slice(-3);
     actions.setCompare(next);
     nav({ to: "/compare" });

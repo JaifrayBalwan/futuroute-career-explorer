@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 
 import { Toaster } from "@/components/ui/sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { setDataOwner } from "@/lib/store";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
@@ -119,7 +120,11 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const router = useRouter();
   useEffect(() => {
-    const { data } = supabase.auth.onAuthStateChange((event) => {
+    // Personal progress belongs to the signed-in account, so switch data sets with the session.
+    const applyOwner = (session: { user?: { id: string } | null } | null) => setDataOwner(session?.user?.id ?? null);
+    void supabase.auth.getSession().then(({ data }) => applyOwner(data.session));
+    const { data } = supabase.auth.onAuthStateChange((event, session) => {
+      applyOwner(session);
       if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
       router.invalidate();
       if (event !== "SIGNED_OUT") queryClient.invalidateQueries();

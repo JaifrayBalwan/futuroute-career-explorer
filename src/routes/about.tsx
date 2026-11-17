@@ -15,9 +15,9 @@ export const Route = createFileRoute("/about")({
 });
 
 const STATUS = [
-  ["Working now", "Questionnaire, rule-based recommendations, career comparison, budget planner, mini-challenges, roadmap tracking, dashboard — all saved in your browser."],
+  ["Working now", "Accounts with email sign-in and password reset, onboarding, rule-based recommendations, career comparison, budget planner, mini-challenges, roadmap tracking and a personal dashboard."],
   ["Demo Mode", "Recommendations and career information are curated samples and simple illustrative rules — not live AI and not a validated assessment."],
-  ["Future integration", "Secure server-side AI using prepared prompt templates, optional accounts and cloud sync across devices."],
+  ["Future integration", "Secure server-side AI using prepared prompt templates, and cloud sync of your saved careers and roadmap across devices."],
 ];
 
 function About() {
@@ -34,7 +34,7 @@ function About() {
         <Glass><h2 className="font-display text-xl font-semibold">What's real, what's demo</h2>
           <dl className="mt-3 space-y-3">{STATUS.map(([t, d]) => <div key={t}><dt className="font-medium text-cyan">{t}</dt><dd className="text-sm text-text-2">{d}</dd></div>)}</dl>
         </Glass>
-        <Glass><h2 id="privacy" className="font-display text-xl font-semibold">Privacy</h2><p className="mt-2 text-sm text-text-2">Futuroute has no accounts and no server database. Your answers and progress stay in this browser's local storage, and you can clear them anytime in Settings.</p></Glass>
+        <Glass><h2 id="privacy" className="font-display text-xl font-semibold">Privacy</h2><p className="mt-2 text-sm text-text-2">Your account is protected by email and password, and only you can open your profile, saved careers, comparisons and roadmap. Account details and your career profile are stored in Futuroute's secure backend; exploration progress is kept per account in this browser for now, and you can clear it anytime in Settings.</p></Glass>
         <Glass><h2 id="contact" className="font-display text-xl font-semibold">Contact</h2><p className="mt-2 text-sm text-text-2">Futuroute is a B.Tech Computer Science and Engineering university project at The NorthCap University, Gurugram. For questions, contact the project author through the university.</p></Glass>
       </div>
     </AppShell>

@@ -6,7 +6,7 @@ import { RouteMap, SaveButton } from "@/components/CareerParts";
 import { getCareer } from "@/lib/careers";
 import { roadmapProgress, useApp } from "@/lib/store";
 
-export const Route = createFileRoute("/dashboard")({
+export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({
     meta: [
       { title: "My Dashboard — Futuroute" },
@@ -46,7 +46,7 @@ function Dashboard() {
           <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <h2 className="font-display text-xl font-semibold">Welcome to Futuroute 👋</h2>
-              <p className="mt-1 text-text-2">You haven't explored anything yet. Pick a first step — everything you do is saved in this browser.</p>
+              <p className="mt-1 text-text-2">You haven't explored anything yet. Pick a first step — what you save here stays with your account.</p>
             </div>
             <div className="flex flex-wrap gap-2">
               <Link to="/discover" className={btnClass("primary")}><Compass className="size-4" />Start career discovery</Link>

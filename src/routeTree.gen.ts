@@ -13,17 +13,20 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthRouteImport } from './routes/auth'
-import { Route as CompareRouteImport } from './routes/compare'
-import { Route as DashboardRouteImport } from './routes/dashboard'
-import { Route as DiscoverRouteImport } from './routes/discover'
-import { Route as PlannerRouteImport } from './routes/planner'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
-import { Route as RoadmapRouteImport } from './routes/roadmap'
-import { Route as SavedRouteImport } from './routes/saved'
-import { Route as SettingsRouteImport } from './routes/settings'
-import { Route as TryRouteImport } from './routes/try'
+import { Route as AuthenticatedCompareRouteImport } from './routes/_authenticated/compare'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedDiscoverRouteImport } from './routes/_authenticated/discover'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
+import { Route as AuthenticatedPlannerRouteImport } from './routes/_authenticated/planner'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
+import { Route as AuthenticatedRoadmapRouteImport } from './routes/_authenticated/roadmap'
+import { Route as AuthenticatedSavedRouteImport } from './routes/_authenticated/saved'
+import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
+import { Route as AuthenticatedTryRouteImport } from './routes/_authenticated/try'
 import { Route as CareersIdRouteImport } from './routes/careers.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -45,24 +48,19 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CompareRoute = CompareRouteImport.update({
-  id: '/compare',
-  path: '/compare',
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DashboardRoute = DashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DiscoverRoute = DiscoverRouteImport.update({
-  id: '/discover',
-  path: '/discover',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PlannerRoute = PlannerRouteImport.update({
-  id: '/planner',
-  path: '/planner',
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
@@ -70,34 +68,54 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
   path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RoadmapRoute = RoadmapRouteImport.update({
-  id: '/roadmap',
-  path: '/roadmap',
-  getParentRoute: () => rootRouteImport,
+const AuthenticatedCompareRoute = AuthenticatedCompareRouteImport.update({
+  id: '/compare',
+  path: '/compare',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const SavedRoute = SavedRouteImport.update({
-  id: '/saved',
-  path: '/saved',
-  getParentRoute: () => rootRouteImport,
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const SettingsRoute = SettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TryRoute = TryRouteImport.update({
-  id: '/try',
-  path: '/try',
-  getParentRoute: () => rootRouteImport,
+const AuthenticatedDiscoverRoute = AuthenticatedDiscoverRouteImport.update({
+  id: '/discover',
+  path: '/discover',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedOnboardingRoute = AuthenticatedOnboardingRouteImport.update({
   id: '/onboarding',
   path: '/onboarding',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedPlannerRoute = AuthenticatedPlannerRouteImport.update({
+  id: '/planner',
+  path: '/planner',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedRoadmapRoute = AuthenticatedRoadmapRouteImport.update({
+  id: '/roadmap',
+  path: '/roadmap',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedSavedRoute = AuthenticatedSavedRouteImport.update({
+  id: '/saved',
+  path: '/saved',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedTryRoute = AuthenticatedTryRouteImport.update({
+  id: '/try',
+  path: '/try',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const CareersIdRoute = CareersIdRouteImport.update({
@@ -110,34 +128,40 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
-  '/compare': typeof CompareRoute
-  '/dashboard': typeof DashboardRoute
-  '/discover': typeof DiscoverRoute
-  '/planner': typeof PlannerRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/roadmap': typeof RoadmapRoute
-  '/saved': typeof SavedRoute
-  '/settings': typeof SettingsRoute
-  '/try': typeof TryRoute
+  '/compare': typeof AuthenticatedCompareRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/discover': typeof AuthenticatedDiscoverRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/planner': typeof AuthenticatedPlannerRoute
   '/profile': typeof AuthenticatedProfileRoute
+  '/roadmap': typeof AuthenticatedRoadmapRoute
+  '/saved': typeof AuthenticatedSavedRoute
+  '/settings': typeof AuthenticatedSettingsRoute
+  '/try': typeof AuthenticatedTryRoute
   '/careers/$id': typeof CareersIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
-  '/compare': typeof CompareRoute
-  '/dashboard': typeof DashboardRoute
-  '/discover': typeof DiscoverRoute
-  '/planner': typeof PlannerRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/roadmap': typeof RoadmapRoute
-  '/saved': typeof SavedRoute
-  '/settings': typeof SettingsRoute
-  '/try': typeof TryRoute
+  '/compare': typeof AuthenticatedCompareRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/discover': typeof AuthenticatedDiscoverRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/planner': typeof AuthenticatedPlannerRoute
   '/profile': typeof AuthenticatedProfileRoute
+  '/roadmap': typeof AuthenticatedRoadmapRoute
+  '/saved': typeof AuthenticatedSavedRoute
+  '/settings': typeof AuthenticatedSettingsRoute
+  '/try': typeof AuthenticatedTryRoute
   '/careers/$id': typeof CareersIdRoute
 }
 export interface FileRoutesById {
@@ -146,17 +170,20 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
-  '/compare': typeof CompareRoute
-  '/dashboard': typeof DashboardRoute
-  '/discover': typeof DiscoverRoute
-  '/planner': typeof PlannerRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/roadmap': typeof RoadmapRoute
-  '/saved': typeof SavedRoute
-  '/settings': typeof SettingsRoute
-  '/try': typeof TryRoute
+  '/_authenticated/compare': typeof AuthenticatedCompareRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/discover': typeof AuthenticatedDiscoverRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
+  '/_authenticated/planner': typeof AuthenticatedPlannerRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
+  '/_authenticated/roadmap': typeof AuthenticatedRoadmapRoute
+  '/_authenticated/saved': typeof AuthenticatedSavedRoute
+  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/_authenticated/try': typeof AuthenticatedTryRoute
   '/careers/$id': typeof CareersIdRoute
 }
 export interface FileRouteTypes {
@@ -165,34 +192,40 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/auth'
+    | '/forgot-password'
+    | '/login'
+    | '/register'
+    | '/reset-password'
     | '/compare'
     | '/dashboard'
     | '/discover'
+    | '/onboarding'
     | '/planner'
-    | '/reset-password'
+    | '/profile'
     | '/roadmap'
     | '/saved'
     | '/settings'
     | '/try'
-    | '/onboarding'
-    | '/profile'
     | '/careers/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/auth'
+    | '/forgot-password'
+    | '/login'
+    | '/register'
+    | '/reset-password'
     | '/compare'
     | '/dashboard'
     | '/discover'
+    | '/onboarding'
     | '/planner'
-    | '/reset-password'
+    | '/profile'
     | '/roadmap'
     | '/saved'
     | '/settings'
     | '/try'
-    | '/onboarding'
-    | '/profile'
     | '/careers/$id'
   id:
     | '__root__'
@@ -200,17 +233,20 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/about'
     | '/auth'
-    | '/compare'
-    | '/dashboard'
-    | '/discover'
-    | '/planner'
+    | '/forgot-password'
+    | '/login'
+    | '/register'
     | '/reset-password'
-    | '/roadmap'
-    | '/saved'
-    | '/settings'
-    | '/try'
+    | '/_authenticated/compare'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/discover'
     | '/_authenticated/onboarding'
+    | '/_authenticated/planner'
     | '/_authenticated/profile'
+    | '/_authenticated/roadmap'
+    | '/_authenticated/saved'
+    | '/_authenticated/settings'
+    | '/_authenticated/try'
     | '/careers/$id'
   fileRoutesById: FileRoutesById
 }
@@ -219,15 +255,10 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
-  CompareRoute: typeof CompareRoute
-  DashboardRoute: typeof DashboardRoute
-  DiscoverRoute: typeof DiscoverRoute
-  PlannerRoute: typeof PlannerRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
+  LoginRoute: typeof LoginRoute
+  RegisterRoute: typeof RegisterRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
-  RoadmapRoute: typeof RoadmapRoute
-  SavedRoute: typeof SavedRoute
-  SettingsRoute: typeof SettingsRoute
-  TryRoute: typeof TryRoute
   CareersIdRoute: typeof CareersIdRoute
 }
 
@@ -261,32 +292,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/compare': {
-      id: '/compare'
-      path: '/compare'
-      fullPath: '/compare'
-      preLoaderRoute: typeof CompareRouteImport
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteImport
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/discover': {
-      id: '/discover'
-      path: '/discover'
-      fullPath: '/discover'
-      preLoaderRoute: typeof DiscoverRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/planner': {
-      id: '/planner'
-      path: '/planner'
-      fullPath: '/planner'
-      preLoaderRoute: typeof PlannerRouteImport
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reset-password': {
@@ -296,33 +320,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/roadmap': {
-      id: '/roadmap'
-      path: '/roadmap'
-      fullPath: '/roadmap'
-      preLoaderRoute: typeof RoadmapRouteImport
-      parentRoute: typeof rootRouteImport
+    '/_authenticated/compare': {
+      id: '/_authenticated/compare'
+      path: '/compare'
+      fullPath: '/compare'
+      preLoaderRoute: typeof AuthenticatedCompareRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/saved': {
-      id: '/saved'
-      path: '/saved'
-      fullPath: '/saved'
-      preLoaderRoute: typeof SavedRouteImport
-      parentRoute: typeof rootRouteImport
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/settings': {
-      id: '/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof SettingsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/try': {
-      id: '/try'
-      path: '/try'
-      fullPath: '/try'
-      preLoaderRoute: typeof TryRouteImport
-      parentRoute: typeof rootRouteImport
+    '/_authenticated/discover': {
+      id: '/_authenticated/discover'
+      path: '/discover'
+      fullPath: '/discover'
+      preLoaderRoute: typeof AuthenticatedDiscoverRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/onboarding': {
       id: '/_authenticated/onboarding'
@@ -331,11 +348,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedOnboardingRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/planner': {
+      id: '/_authenticated/planner'
+      path: '/planner'
+      fullPath: '/planner'
+      preLoaderRoute: typeof AuthenticatedPlannerRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/profile': {
       id: '/_authenticated/profile'
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof AuthenticatedProfileRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/roadmap': {
+      id: '/_authenticated/roadmap'
+      path: '/roadmap'
+      fullPath: '/roadmap'
+      preLoaderRoute: typeof AuthenticatedRoadmapRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/saved': {
+      id: '/_authenticated/saved'
+      path: '/saved'
+      fullPath: '/saved'
+      preLoaderRoute: typeof AuthenticatedSavedRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/settings': {
+      id: '/_authenticated/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/try': {
+      id: '/_authenticated/try'
+      path: '/try'
+      fullPath: '/try'
+      preLoaderRoute: typeof AuthenticatedTryRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/careers/$id': {
@@ -349,13 +401,29 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedCompareRoute: typeof AuthenticatedCompareRoute
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedDiscoverRoute: typeof AuthenticatedDiscoverRoute
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
+  AuthenticatedPlannerRoute: typeof AuthenticatedPlannerRoute
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
+  AuthenticatedRoadmapRoute: typeof AuthenticatedRoadmapRoute
+  AuthenticatedSavedRoute: typeof AuthenticatedSavedRoute
+  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
+  AuthenticatedTryRoute: typeof AuthenticatedTryRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedCompareRoute: AuthenticatedCompareRoute,
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedDiscoverRoute: AuthenticatedDiscoverRoute,
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
+  AuthenticatedPlannerRoute: AuthenticatedPlannerRoute,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
+  AuthenticatedRoadmapRoute: AuthenticatedRoadmapRoute,
+  AuthenticatedSavedRoute: AuthenticatedSavedRoute,
+  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
+  AuthenticatedTryRoute: AuthenticatedTryRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -366,15 +434,10 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
-  CompareRoute: CompareRoute,
-  DashboardRoute: DashboardRoute,
-  DiscoverRoute: DiscoverRoute,
-  PlannerRoute: PlannerRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
+  LoginRoute: LoginRoute,
+  RegisterRoute: RegisterRoute,
   ResetPasswordRoute: ResetPasswordRoute,
-  RoadmapRoute: RoadmapRoute,
-  SavedRoute: SavedRoute,
-  SettingsRoute: SettingsRoute,
-  TryRoute: TryRoute,
   CareersIdRoute: CareersIdRoute,
 }
 export const routeTree = rootRouteImport

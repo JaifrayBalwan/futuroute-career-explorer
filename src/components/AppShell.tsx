@@ -1,5 +1,5 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Bell, Bookmark, Compass, FlaskConical, GitCompareArrows, LayoutGrid, Map, Menu, Search, Settings, Wallet, X, Info } from "lucide-react";
 import { Logo, btnClass, DemoBadge } from "./ui-kit";
 import { cn } from "@/lib/utils";
@@ -40,25 +40,43 @@ function SideNav({ onNavigate }: { onNavigate?: () => void }) {
   );
 }
 
-function DemoCard() {
+function AccountCard() {
   const { user, loading } = useUser();
   const nav = useNavigate();
   const qc = useQueryClient();
-  if (loading) return <div className="glass-soft h-20 p-4" />;
+  const [name, setName] = useState("");
+
+  useEffect(() => {
+    if (!user) { setName(""); return; }
+    let active = true;
+    void supabase.from("profiles").select("display_name").eq("id", user.id).maybeSingle()
+      .then(({ data }) => { if (active) setName(data?.display_name ?? ""); });
+    return () => { active = false; };
+  }, [user]);
+
+  if (loading) return <div className="glass-soft h-20 p-4" aria-busy="true" />;
   if (!user) return (
     <div className="glass-soft p-4">
-      <p className="text-sm font-medium">Exploring as a guest</p>
-      <p className="mt-1 text-xs text-muted-foreground">Progress is kept only in this browser. Sign in to save it to your account.</p>
-      <Link to="/auth" className={btnClass("soft", "mt-3 w-full")}>Sign in or sign up</Link>
+      <p className="text-sm font-medium">You're browsing as a guest</p>
+      <p className="mt-1 text-xs text-muted-foreground">Sign in to keep your careers, comparisons and roadmap.</p>
+      <Link to="/login" className={btnClass("soft", "mt-3 w-full")}>Sign in</Link>
     </div>
   );
-  async function out() { await qc.cancelQueries(); qc.clear(); await supabase.auth.signOut(); nav({ to: "/auth", replace: true }); }
+
+  const label = name || (user.user_metadata?.["full_name"] as string | undefined) || user.email || "Your account";
+  async function signOut() {
+    await qc.cancelQueries();
+    qc.clear();
+    await supabase.auth.signOut();
+    nav({ to: "/", replace: true });
+  }
   return (
     <div className="glass-soft p-4">
-      <p className="truncate text-sm font-medium">{user.email}</p>
-      <div className="mt-3 flex gap-2">
-        <Link to="/profile" className={btnClass("soft", "flex-1")}>My profile</Link>
-        <button type="button" onClick={out} className={btnClass("outline")}>Sign out</button>
+      <p className="truncate text-sm font-medium">{label}</p>
+      <p className="truncate text-xs text-muted-foreground">{user.email}</p>
+      <div className="mt-3 grid grid-cols-2 gap-2">
+        <Link to="/profile" className={btnClass("soft")}>Profile</Link>
+        <button type="button" onClick={signOut} className={btnClass("outline")}>Sign out</button>
       </div>
     </div>
   );
@@ -116,7 +134,7 @@ export function AppShell({ children, greeting }: { children: ReactNode; greeting
       <aside className="glass sticky top-4 m-4 hidden h-[calc(100vh-2rem)] w-64 shrink-0 flex-col gap-6 overflow-y-auto p-4 lg:flex">
         <Link to="/" className="px-2 pt-1"><Logo /></Link>
         <SideNav />
-        <DemoCard />
+        <AccountCard />
       </aside>
 
       {open && (
@@ -128,7 +146,7 @@ export function AppShell({ children, greeting }: { children: ReactNode; greeting
               <button type="button" aria-label="Close menu" onClick={() => setOpen(false)} className="grid size-9 place-items-center rounded-lg hover:bg-secondary"><X className="size-4" /></button>
             </div>
             <SideNav onNavigate={() => setOpen(false)} />
-            <DemoCard />
+            <AccountCard />
           </div>
         </div>
       )}

@@ -8,7 +8,7 @@ import { CAREERS } from "@/lib/careers";
 import { recommend } from "@/lib/engine";
 import { actions, useApp, type DiscoveryAnswers } from "@/lib/store";
 
-export const Route = createFileRoute("/discover")({
+export const Route = createFileRoute("/_authenticated/discover")({
   head: () => ({
     meta: [
       { title: "Discover Careers — Futuroute" },

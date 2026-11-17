@@ -7,7 +7,7 @@ import { getCareer } from "@/lib/careers";
 import { actions, roadmapProgress, useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/roadmap")({
+export const Route = createFileRoute("/_authenticated/roadmap")({
   head: () => ({
     meta: [
       { title: "My Roadmap — Futuroute" },
